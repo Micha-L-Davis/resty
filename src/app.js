@@ -17,17 +17,22 @@ class App extends React.Component {
     };
   }
 
-  callApi = (requestParams) => {
-    // mock output
-    const data = {
-      count: 2,
-      results: [
-        { name: 'fake thing 1', url: 'http://fakethings.com/1' },
-        { name: 'fake thing 2', url: 'http://fakethings.com/2' },
-      ],
-    };
-    this.setState({ data, requestParams });
-  }
+  setRequest = value => this.setState({ requestParams: value });
+
+  setData = value => this.setState({ data: value });
+
+  // callApi = requestParams => {
+  //   // mock output
+  //   const data = {
+  //     count: 2,
+  //     results: [
+  //       { name: 'fake thing 1', url: 'http://fakethings.com/1' },
+  //       { name: 'fake thing 2', url: 'http://fakethings.com/2' },
+  //     ],
+  //   };
+  //   this.setRequest(requestParams);
+  //   this.setData(data);
+  // }
 
   render() {
     return (
@@ -35,7 +40,7 @@ class App extends React.Component {
         <Header />
         <div>Request Method: {this.state.requestParams.method}</div>
         <div>URL: {this.state.requestParams.url}</div>
-        <Form handleApiCall={this.callApi} />
+        <Form setRequest={this.setRequest} setData={this.setData} />
         <Results data={this.state.data} />
         <Footer />
       </React.Fragment>
