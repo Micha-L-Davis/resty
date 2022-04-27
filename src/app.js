@@ -38,8 +38,8 @@ class App extends React.Component {
     return (
       <React.Fragment>
         <Header />
-        <div>Request Method: {this.state.requestParams.method}</div>
-        <div>URL: {this.state.requestParams.url}</div>
+        <div data-testid="rest-method">Request Method: {this.state.requestParams.method}</div>
+        <div data-testid="request-url">URL: {this.state.requestParams.url}</div>
         <Form setRequest={this.setRequest} setData={this.setData} />
         <Results data={this.state.data} />
         <Footer />
