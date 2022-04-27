@@ -40,11 +40,11 @@ let Form = (props) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} data-testid="form">
         <label >
           <span>URL: </span>
           <input name="url" type="text" />
-          <button type="submit">GO!</button>
+          <button type="submit" >GO!</button>
         </label>
         {(method === "put" || method === "post") &&
           <label>
@@ -52,9 +52,9 @@ let Form = (props) => {
             <textarea name="body" rows="10" cols="42" />
           </label>
         }
-        <label className="methods" onClick={handleSelectMethod}>
+        <label className="methods" onClick={handleSelectMethod} data-testid="selectMethod">
           <span id="get" className={method === 'get' ? 'active' : 'inactive'}>GET</span>
-          <span id="post" className={method === 'post' ? 'active' : 'inactive'}>POST</span>
+          <span id="post" className={method === 'post' ? 'active' : 'inactive'} data-testid='post-button'>POST</span>
           <span id="put" className={method === 'put' ? 'active' : 'inactive'}>PUT</span>
           <span id="delete" className={method === 'delete' ? 'active' : 'inactive'}>DELETE</span>
         </label>
