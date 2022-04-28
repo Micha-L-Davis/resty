@@ -2,6 +2,7 @@ import "./form.scss";
 
 import { useState } from "react";
 
+
 let Form = (props) => {
   let [method, setMethod] = useState("get");
 
@@ -10,27 +11,9 @@ let Form = (props) => {
     const formData = {
       method: method,
       url: event.target.url.value,
+      body: event.target.body ? event.target.body.value : null
     };
-    props.setData('Loading...')
-    props.setRequest(formData)
-    //Mock API Data
-    const data = {
-      count: 2,
-      headers: {
-        Status: 200,
-        Date: "Mon, 27 Jul 2009 12:28:53 GMT",
-        Server: "Apache/2.2.14 (Win32)",
-        "Last-Modified": "Wed, 22 Jul 2009 19:15:56 GMT",
-        "Content-Length": 88,
-        "Content-Type": "text/html",
-        Connection: "Closed",
-      },
-      results: [
-        { name: 'fake thing 1', url: 'http://fakethings.com/1' },
-        { name: 'fake thing 2', url: 'http://fakethings.com/2' },
-      ],
-    };
-    setTimeout(() => props.setData(data), 1500);
+    props.callApi(formData)
   }
 
   let handleSelectMethod = event => {
