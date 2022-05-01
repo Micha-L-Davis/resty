@@ -1,0 +1,8 @@
+$backgroundColor: lightgray;
+
+.results {
+  background-color: $backgroundColor;
+  min-height: 300px;
+  overflow-y: scroll;
+  margin: 2%;
+}
