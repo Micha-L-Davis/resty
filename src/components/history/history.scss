@@ -1,0 +1,16 @@
+$backgroundColor: lightgray;
+
+.history {
+  background-color: $backgroundColor;
+  min-height: 75px;
+  overflow-y: scroll;
+  margin-top: 2%;
+  margin-left: 2%;
+  margin-right: 2%
+}
+
+.current-history {
+  background-color: $backgroundColor;
+  margin-left: 2%;
+  margin-right: 2%
+}
