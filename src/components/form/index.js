@@ -13,7 +13,7 @@ let Form = (props) => {
       url: event.target.url.value,
       body: event.target.body ? event.target.body.value : null
     };
-    props.callApi(formData)
+    props.sendRequest({ type: 'REQUEST', payload: formData })
   }
 
   let handleSelectMethod = event => {
