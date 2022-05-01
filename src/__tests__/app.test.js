@@ -24,16 +24,11 @@ describe('Form submission tests', () => {
   let selectMethod = screen.getByTestId('selectMethod');
   let resultArea = screen.getByTestId('result-area');
 
-  it('should update the rest method, request url, and response area on submit', () => {
-    let restMethod = screen.getByTestId('rest-method');
-    let requestUrl = screen.getByTestId('request-url');
-
-
+  it('should update the response area and current request on submit', async () => {
     fireEvent.click(selectMethod, { target: { id: 'post' } });
     fireEvent.submit(form, { target: { url: { value: 'test url' } } });
 
-    expect(requestUrl).toContainHTML('test url');
-    expect(restMethod).toContainHTML('post');
+    await screen.findByText(/post : test url/i).then((result) => expect(result).toBeTruthy());
     expect(resultArea).not.toBeNull();
   });
 

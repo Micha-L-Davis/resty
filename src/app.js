@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import './app.scss';
 
 import axios from "axios";
@@ -7,47 +7,55 @@ import Header from './components/header';
 import Footer from './components/footer';
 import Form from './components/form';
 import Results from './components/results';
+import History from './components/history';
 
 function App() {
-
-  const [data, setData] = useState(null);
-  const [requestParams, setRequestParams] = useState({});
-
-  const callApi = requestParams => {
-    setRequestParams(requestParams);
-    setData('Loading...');
+  const initialState = {
+    data: null,
+    requestParams: {},
+    history: []
+    // back: [],
+    // forward: []
   }
 
-  useEffect(() => {
-    switch (requestParams.method) {
-      case 'get':
-        axios.get(requestParams.url)
-          .then((response) => setData(response.data));
-        break;
-      case 'post':
-        axios.post(requestParams.url, requestParams.body)
-          .then((response) => setData(response.data));
-        break;
-      case 'put':
-        axios.put(requestParams.url, requestParams.body)
-          .then((response) => setData(response.data));
-        break;
-      case 'delete':
-        axios.get(requestParams.url)
-          .then((response) => setData(response.data));
-        break;
+  const initialRender = useRef(true);
+
+  const reducer = (state = initialState, action) => {
+    const { type, payload } = action;
+    switch (type) {
+      case 'REQUEST':
+        if (state.requestParams.method) state.history.push(state.requestParams);
+        return { ...state, data: 'Loading...', requestParams: payload }
+      case 'RESPONSE':
+        return { ...state, data: payload };
       default:
         break;
     }
-  }, [requestParams]);
+  };
+
+  let [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+    } else {
+      axios({
+        url: state.requestParams.url,
+        method: state.requestParams.method
+      })
+        .then((response) => dispatch({ type: 'RESPONSE', payload: { headers: response.headers, data: response.data } }))
+        .catch((error) => {
+          dispatch({ type: 'RESPONSE', payload: { headers: null, data: error } });
+        });
+    }
+  }, [state.requestParams]);
 
   return (
     <>
       <Header />
-      <div data-testid="rest-method">Request Method: {requestParams.method}</div>
-      <div data-testid="request-url">URL: {requestParams.url}</div>
-      <Form callApi={callApi} />
-      <Results data={data} />
+      <History history={state.history} current={state.requestParams} recall={dispatch} />
+      <Form sendRequest={dispatch} />
+      <Results data={state.data} />
       <Footer />
     </>
   );
