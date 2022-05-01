@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import './app.scss';
 
 import axios from "axios";
@@ -18,22 +18,16 @@ function App() {
     // forward: []
   }
 
+  const initialRender = useRef(true);
+
   const reducer = (state = initialState, action) => {
     const { type, payload } = action;
     switch (type) {
       case 'REQUEST':
-        if (state.requestParams.url) state.history.push(state.requestParams);
+        if (state.requestParams.method) state.history.push(state.requestParams);
         return { ...state, data: 'Loading...', requestParams: payload }
       case 'RESPONSE':
         return { ...state, data: payload };
-      // case 'BACK':
-      //   let previous = state.back.shift();
-      //   state.forward.unshift(state.requestParams);
-      //   return { ...state, data: 'Loading...', requestParams: previous || state.requestParams };
-      // case 'FORWARD':
-      //   let next = state.forward.shift();
-      //   state.back.unshift(state.requestParams);
-      //   return { ...state, data: 'Loading...', requestParams: next || state.requestParams };
       default:
         break;
     }
@@ -42,21 +36,23 @@ function App() {
   let [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    try {
+    if (initialRender.current) {
+      initialRender.current = false;
+    } else {
       axios({
         url: state.requestParams.url,
         method: state.requestParams.method
-      }).then((response) => dispatch({ type: 'RESPONSE', payload: { headers: response.headers, data: response.data } }));
-    } catch (err) {
-      console.log(err);
+      })
+        .then((response) => dispatch({ type: 'RESPONSE', payload: { headers: response.headers, data: response.data } }))
+        .catch((error) => {
+          dispatch({ type: 'RESPONSE', payload: { headers: null, data: error } });
+        });
     }
   }, [state.requestParams]);
 
   return (
     <>
       <Header />
-      {/* <div data-testid="rest-method">Request Method: {state.requestParams.method}</div>
-      <div data-testid="request-url">URL: {state.requestParams.url}</div> */}
       <History history={state.history} current={state.requestParams} recall={dispatch} />
       <Form sendRequest={dispatch} />
       <Results data={state.data} />
