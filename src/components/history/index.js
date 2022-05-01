@@ -16,7 +16,7 @@ let History = (props) => {
 
   let handleRecall = (event) => {
     event.preventDefault();
-    let historyIndex = +event.target.id.split('-')[0]
+    let historyIndex = +event.target.id;
     let payload = props.history[historyIndex];
     props.recall({ type: 'REQUEST', payload: payload })
   }
@@ -28,7 +28,7 @@ let History = (props) => {
         <ul>
           {
             props.history.map((element, index) =>
-              <li key={`${index}-${element.method}-${element.url}`} onClick={handleRecall}>{element.method} : {element.url}</li>
+              <li key={`${index}-${element.method}-${element.url}`} id={`${index}`} onClick={handleRecall}>{element.method} : {element.url}</li>
             )
           }
         </ul>
