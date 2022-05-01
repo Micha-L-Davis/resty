@@ -1,7 +1,8 @@
-import React from 'react';
+import './results.scss';
+
 
 let Results = (props) => (
-  <section>
+  <section className='results'>
     <pre data-testid='result-area'>{props.data ? JSON.stringify(props.data, undefined, 2) : null}</pre>
   </section>
 );
