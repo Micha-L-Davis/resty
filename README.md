@@ -57,7 +57,7 @@ Results will appear in the window below the form. The history of past requests i
 
 ---------------------------
 
-## Domain Model
+## Site Model
 
 ![](/public/assets/uml.png)
 
