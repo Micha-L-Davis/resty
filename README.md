@@ -1,16 +1,52 @@
-# RESTy
+# ***RESTY***
 
-A web-based REST API testing client. 
+---------------------------------
 
-## Deployed Site
+## Web Application
 
-https://codesandbox.io/s/sad-bogdan-ck12vw
+***[Explain your app, should be at least a paragraph. What does it do? Why should I use? Sell your product!]***
 
-## Diagram
+A web-based REST API testing client built with React and Sass.
 
-![](/public/assets/uml.png)
+The app provides an interface through which an API endpoint can be entered and a REST method request constructed. The app will send the request and print the results to an output area.  The app also tracks the history of user requests, and allows the user to navigate that history.
 
-## Use
+---------------------------------
+
+## Tools Used
+
+Microsoft Visual Studio
+
+- React.js
+- Axios
+- Sass
+
+---------------------------------
+
+## Getting Started
+
+Clone this repository to your local machine.
+
+```
+git clone https://github.com/resty/resty.git
+```
+
+Once downloaded, you can either use the dotnet CLI utilities or Visual Studio to build the web application.
+
+```
+cd resty
+`npm i`
+```
+
+Install all dependencies needed for the project.
+
+```
+npm start
+```
+
+---------------------------------
+
+## Usage
+
 
 1. Enter URL of API endpoint into form
 2. Select an HTTP method from the buttons below the URL.
@@ -19,13 +55,16 @@ https://codesandbox.io/s/sad-bogdan-ck12vw
 
 Results will appear in the window below the form. The history of past requests is maintained above, and can be navigated by clicking on the items directly.
 
-## Installation
+---------------------------
 
-1. Clone this repository onto your local machine
-2. `cd` into `./resty`
-3. Install package dependencies with `npm install`
-4. Run `npm start`
+## Domain Model
+
+![](/public/assets/uml.png)
+
+---------------------------
 
 ## Author
 
 Micha Davis
+
+------------------------------
